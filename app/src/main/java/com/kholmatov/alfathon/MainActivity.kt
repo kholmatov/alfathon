@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.kholmatov.alfathon.ui.theme.AlfathonTheme
-import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,16 +36,14 @@ fun LetterButtons() {
     LazyColumn {
         items(28) { index ->
             Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(horizontal = 0.dp), // Убрать отступы между рядами кнопок
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 repeat(4) { innerIndex ->
                     val letter = getLetter(index * 4 + innerIndex) // Get corresponding letter
                     Button(
                         onClick = { /* Handle button click here */ },
-                        modifier = Modifier.fillMaxWidth(1f) // Заменить на fillMaxWidth
-//                        modifier = Modifier.weight(1f) // Ensure equal width for each button
+                        modifier = Modifier.weight(1f) // Ensure equal width for each button
                     ) {
                         Text(letter)
                     }
