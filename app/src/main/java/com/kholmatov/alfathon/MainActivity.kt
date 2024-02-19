@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 //import androidx.compose.foundation.BorderStroke
 //import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,6 +24,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 //import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 //import androidx.compose.ui.graphics.Color
 //import androidx.compose.ui.graphics.RectangleShape
 //import androidx.compose.ui.platform.LocalConfiguration
@@ -101,12 +105,17 @@ fun LetterButtons(
                     .aspectRatio(1f)
                     .clickable {
                         speakLetter(letter, textToSpeech)
-                    }
+                    }.border(
+                        width = 2.dp,
+                        color = Color.DarkGray,
+                        shape = RectangleShape
+                    )
             ) {
                 Text(
                     text = letter,
                     fontSize = 40.sp,
                     textAlign = TextAlign.Center,
+//                    contentPadding = TextAlign.Center,
                     modifier = Modifier.padding(20.dp)
                 )
             }
