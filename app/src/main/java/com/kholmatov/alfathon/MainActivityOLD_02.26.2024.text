@@ -1,0 +1,233 @@
+package com.kholmatov.alfathon
+
+import android.media.MediaPlayer
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
+import com.kholmatov.alfathon.ui.theme.AlfathonTheme
+
+class MainActivity : ComponentActivity() {
+    private val letters = listOf(
+        "ا", "ب", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض",
+        "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "ه", "و", "ي"
+    )
+
+    private val letters_dict = listOf(
+        Triple('ا', "ـا", "ـا"), // Алеф
+        Triple('ب', "ـبـ", "ـب"), // Ба
+        Triple('ت', "ـتـ", "ـت"), // Та
+        Triple('ث', "ـثـ", "ـث"), // Тха
+        Triple('ج', "ـجـ", "ـج"), // Джим
+        Triple('ح', "ـحـ", "ـح"), // Ха
+        Triple('خ', "ـخـ", "ـخ"), // Ха
+        Triple('د', "ـد", "ـد"), // Даль
+        Triple('ذ', "ـذ", "ـذ"), // Заль
+        Triple('ر', "ـر", "ـر"), // Ра
+        Triple('ز', "ـز", "ـز"), // Заин
+        Triple('س', "ـسـ", "ـس"), // Син
+        Triple('ش', "ـشـ", "ـش"), // Шин
+        Triple('ص', "ـصـ", "ـص"), // Сад
+        Triple('ض', "ـضـ", "ـض"), // Дад
+        Triple('ط', "ـطـ", "ـط"), // Та
+        Triple('ظ', "ـظـ", "ـظ"), // За
+        Triple('ع', "ـعـ", "ـع"), // Айн
+        Triple('غ', "ـغـ", "ـغ"), // Гайн
+        Triple('ف', "ـفـ", "ـف"), // Фа
+        Triple('ق', "ـقـ", "ـق"), // Каф
+        Triple('ك', "ـكـ", "ـك"), // Каф
+        Triple('ل', "ـلـ", "ـل"), // Лам
+        Triple('م', "ـمـ", "ـم"), // Мим
+        Triple('ن', "ـنـ", "ـن"), // Нун
+        Triple('ه', "ـهـ", "ـه"), // Ха
+        Triple('و', "ـو", "ـو"), // Вав
+        Triple('ي', "ـيـ", "ـي") // Йа
+    )
+
+    private val audioFiles = listOf(
+        "alif", "ba", "taa", "tha", "jeem", "ha", "khaa", "dal",
+        "dhal", "raa", "jaa", "seen", "sheen", "saad", "dhaad",
+        "toa", "dhaa", "ain", "ghain", "faa", "qaaf", "kaaf",
+        "laam", "meem", "noon", "haa", "waw", "yaa"
+    )
+
+
+    private var mediaPlayer: MediaPlayer? = null
+
+    private fun getResourceId(audioFileName: String): Int {
+        return resources.getIdentifier(audioFileName, "raw", packageName)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            AlfathonTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    LetterButtons(letters,
+                        playLetterSound = ::playLetterSound,
+                        lettersDict = letters_dict)
+                }
+            }
+        }
+    }
+
+    private fun playLetterSound(letter: String) {
+
+        val audioFileName = audioFiles[letters.indexOf(letter)]
+        val lettersDict = letters_dict[letters.indexOf(letter)]
+        Log.e("MainActivity", "letter: $letter, start: ${lettersDict.first}")
+        mediaPlayer?.stop() // Stop any previous sound
+        val resId = getResourceId(audioFileName)
+        if (resId != 0) {
+            mediaPlayer = MediaPlayer.create(this, resId)
+            mediaPlayer?.start()
+        } else {
+            Log.e("MainActivity", "Invalid resource ID for file: $audioFileName")
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release()
+    }
+}
+
+@Composable
+fun LetterButtons(
+    letters: List<String>,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(5.dp),
+    playLetterSound: (String) -> Unit,
+    lettersDict: List<Triple<Char, String, String>>
+) {
+    val columns = GridCells.Fixed(4)
+    var expandedLetter: String? by remember { mutableStateOf(null) }
+
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = columns,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        contentPadding = contentPadding
+    ) {
+        items(letters) { letter ->
+            ElevatedCard(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.DarkGray,
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 6.dp,
+
+                ),
+                modifier = Modifier
+                    .padding(1.dp)
+                    .fillMaxWidth(0.25f)
+                    .aspectRatio(1f)
+                    .clickable {
+                        playLetterSound(letter)
+                        expandedLetter = letter
+                    }
+//                    .border(
+//                        width = 0.dp,
+//                        color = Color.DarkGray,
+//                        shape = RectangleShape
+//                    )
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = letter,
+                        fontSize = 40.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+
+            if (expandedLetter != null && expandedLetter == letter) {
+                val letterInfo = lettersDict[letters.indexOf(letter)]
+                val offsetY = ((letters.indexOf(letter) / 4) * 220).dp // Подберите значение сдвига по вашему желанию
+
+                LetterDetailsContent(letter, letterInfo, offsetY)
+            }
+        }
+    }
+}
+
+@Composable
+fun LetterDetailsContent(letter: String, letterInfo: Triple<Char, String, String>?, offsetY: Dp) {
+    Box(
+        modifier = Modifier
+            .offset(y = offsetY)
+            .fillMaxWidth()
+            .height(200.dp).zIndex(1f),
+        contentAlignment = Alignment.Center
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .shadow(elevation = 4.dp, ambientColor = Color.Green)
+        ) {
+            Box(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(text = "$letter", fontSize = 20.sp)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    if (letterInfo != null) {
+                        Text(text = "${letterInfo.second}", fontSize = 18.sp)
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(text = "${letterInfo.third}", fontSize = 18.sp)
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(onClick = { /* Handle close button click here */ }) {
+                        Text(text = "Close")
+                    }
+                }
+            }
+        }
+    }
+}
+
+
