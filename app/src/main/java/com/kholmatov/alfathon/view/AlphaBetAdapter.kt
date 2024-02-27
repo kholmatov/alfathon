@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.ImageView
 import android.widget.TextView
 
@@ -46,12 +47,9 @@ class AlphaBetAdapter(val c:Context,val alphaList:ArrayList<AlphaBets>):
         holder.v.setOnClickListener {
             /**set speak*/
             playLetterSound(alphaList.alphaSound)
-//            speak(alphaList.alphaName)
             /**set Dialog*/
-            showAlpha(alphaList.alphaForm,alphaList.alphaName)
+            showAlpha(alphaList.alphaForm,alphaList.alphaName, alphaList.alphaSound)
         }
-
-
 
     }
 
@@ -67,7 +65,7 @@ class AlphaBetAdapter(val c:Context,val alphaList:ArrayList<AlphaBets>):
         }
     }
 
-    private fun showAlpha(img: Int, name: String) {
+    private fun showAlpha(img: Int, name: String, alphaSound: Int) {
         val inflater = LayoutInflater.from(c)
         val setView = inflater.inflate(R.layout.show_item,null)
         /**set view */
@@ -82,10 +80,35 @@ class AlphaBetAdapter(val c:Context,val alphaList:ArrayList<AlphaBets>):
         val openDialog = showDialog.create()
         btnCancel.setOnClickListener { openDialog.dismiss() }
         openDialog.show()
+        nameAlpha.setOnClickListener { nameAlpha.animate()
+            .scaleX(1.2f)
+            .scaleY(1.2f)
+            .setDuration(200)
+            .withEndAction {
+                nameAlpha.scaleX = 1f
+                nameAlpha.scaleY = 1f
+            }
+            .start()
+            playLetterSound(alphaSound)
+        }
 
+        imgAlpha.setOnClickListener {
+            nameAlpha.animate()
+                .scaleX(1.2f)
+                .scaleY(1.2f)
+                .setDuration(200)
+                .withEndAction {
+                    nameAlpha.scaleX = 1f
+                    nameAlpha.scaleY = 1f
+                }
+                .start()
+
+            playLetterSound(alphaSound) }
     }
 
     override fun getItemCount(): Int {
         return alphaList.size
     }
+
+
 }

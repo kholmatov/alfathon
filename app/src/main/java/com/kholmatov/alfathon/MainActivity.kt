@@ -18,6 +18,13 @@ class MainActivity : ComponentActivity() {
     )
 
 
+    private val pronounce = listOf(
+       "alef",  "baa’", "ta’", "tha’", "gem", "ha’", "kha’", "dal",
+        "thal", "ra’", "zain", "sen", "shen", "sad", "da’",
+        "ta’", "tha’", "ain", "ghain", "fa’", "qaaf", "kaf",
+        "lam", "meem", "noon", "ha’", "waw", "yaa’"
+    )
+
     private lateinit var alphaAdapter:AlphaBetAdapter
     private lateinit var alphaRecycler : RecyclerView
     private lateinit var alphaList:ArrayList<AlphaBets>
@@ -44,13 +51,12 @@ class MainActivity : ComponentActivity() {
         for (item in audioFiles) {
             val alphaImg = resources.getIdentifier(item, "drawable", packageName)
             val alphaForm = resources.getIdentifier("${item}form", "drawable", packageName)
-            Log.e("MainActivity", "Invalid resource ID for file: $alphaForm")
-
             val alphaSound = resources.getIdentifier(item, "raw", packageName)
-            val alphaName = "${item.capitalize()}"
-
+            val alphaName = "${pronounce[audioFiles.indexOf(item)].capitalize()}"
             alphaList.add(AlphaBets(alphaImg, alphaForm, alphaSound, alphaName))
         }
     }
+
+
 
 }
