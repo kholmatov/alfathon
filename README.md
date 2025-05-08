@@ -2,6 +2,13 @@
 
 **Alfathon** is an educational Android app designed to help users learn and practice the Arabic alphabet. Users can browse all 28 Arabic letters, see their visual form, hear their pronunciation, and test their knowledge through interactive quizzes.
 
+<img src="https://play-lh.googleusercontent.com/56F8cyT4MSJ6QUxSLIkIkiNiHvAQg0PWEqk5sfumVKQkhbBjs2ks1Yl_Ty0mPFtLpw=w2560-h1440-rw" alt="Alfathon" >
+<img src="https://play-lh.googleusercontent.com/0GxiIGQvl8V7JtNGyiTV-zb6pkhCTa8eSAUUcdJGvP3tKypjlA8NKhLj8rqxSHO4Gg=w2560-h1440-rw" alt="Alfathon" >
+
+## 🚀 Demo
+
+Try the latest demo [here](https://play.google.com/store/apps/details?id=com.kholmatov.alfathon).
+
 ## ✨ Features
 
 - 🧠 **Interactive Test Mode**  
@@ -56,7 +63,3 @@ app/
 - **Language:** Kotlin  
 - **UI Toolkit:** Android Views + RecyclerView  
 - **Audio:** Local `.mp3` files in `res/raw/`
-
-## 🗒 License
-
-This project is for educational and non-commercial use.
