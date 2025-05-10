@@ -1,5 +1,5 @@
 ---
-title: Privacy Policy
+title: Alfathon Privacy Policy
 ---
 
 # Alfathon Privacy Policy
@@ -45,10 +45,10 @@ We use reasonable technical and organizational measures to protect your data fro
 
 ---
 
-## 5. Children’s Privacy
+## 5. Children's Privacy
 
 Alfathon is designed to be suitable for users of all ages.  
-We do **not knowingly collect any personal information from children**.  
+We do **not knowingly collect** any personal information from children.  
 If you are a parent or guardian and believe your child has provided us with personal information, please contact us and we will take appropriate steps to delete the data.
 
 ---
@@ -56,13 +56,15 @@ If you are a parent or guardian and believe your child has provided us with pers
 ## 6. Content Rating
 
 **Content Rating: Everyone**  
-This app is rated **Everyone** by the International Age Rating Coalition (IARC). It is suitable for all ages and may include minimal cartoon or fantasy violence and infrequent use of mild language.
+This app is rated **Everyone** by the International Age Rating Coalition (IARC).  
+It is suitable for all ages and may include minimal cartoon or fantasy violence and infrequent use of mild language.
 
 ---
 
 ## 7. Policy Updates
 
-We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Effective Date" at the top.
+We may update this Privacy Policy from time to time.  
+Any changes will be posted on this page with an updated "Effective Date" at the top.
 
 ---
 
