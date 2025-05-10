@@ -2,8 +2,6 @@
 title: Alfathon Privacy Policy
 ---
 
-# Alfathon Privacy Policy
-
 **Effective Date:** May 10, 2025
 
 Thank you for using **Alfathon**. Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our app.
